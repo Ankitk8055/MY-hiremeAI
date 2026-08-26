@@ -1454,7 +1454,7 @@ body{
     <div
       class="icon i1"
       id="dockResume"
-      title="Download Resume"
+      title="Preview Resume"
     >
       📄
     </div>
@@ -1533,7 +1533,7 @@ body{
   class="download-note"
   id="downloadNote"
 >
-  Preparing your resume download…
+  Opening your resume…
 </div>
 
 
@@ -1639,138 +1639,33 @@ function showDownloadNote(message){
    This version first downloads the PDF as a Blob.
 ===================================================== */
 
-async function openResume(){
-
+function openResume(){
   const resumeUrl =
-    API_BASE + "/download-resume";
+    API_BASE + "/resume-preview";
 
   showDownloadNote(
-    "Preparing your resume download…"
+    "Opening your resume…"
   );
 
-  try{
+  const previewWindow =
+    window.open(
+      resumeUrl,
+      "_blank",
+      "noopener,noreferrer"
+    );
 
-    const response =
-      await fetch(resumeUrl,{
-        method:"GET",
-        mode:"cors",
-        credentials:"omit",
-        cache:"no-store"
-      });
-
-
-    if(!response.ok){
-
-      throw new Error(
-        "Resume download failed: HTTP " +
-        response.status
-      );
-
-    }
-
-
-    const contentType =
-      (
-        response.headers.get(
-          "content-type"
-        ) || ""
-      ).toLowerCase();
-
-
-    /*
-       Make sure we actually received a PDF.
-       Some backend errors return HTML/JSON.
-    */
-
-    if(
-      !contentType.includes("application/pdf") &&
-      !contentType.includes("application/octet-stream")
-    ){
-
-      const text =
-        await response.text();
-
-      throw new Error(
-        "Server did not return a PDF. " +
-        "Received: " +
-        contentType +
-        " " +
-        text.substring(0,120)
-      );
-
-    }
-
-
-    const blob =
-      await response.blob();
-
-
-    if(!blob || blob.size === 0){
-
-      throw new Error(
-        "The resume file is empty."
-      );
-
-    }
-
-
-    const blobUrl =
-      URL.createObjectURL(blob);
-
-
-    const link =
-      document.createElement("a");
-
-
-    link.href = blobUrl;
-
-    link.download =
-      "Ankit_Kumar_Resume.pdf";
-
-    link.style.display = "none";
-
-    document.body.appendChild(link);
-
-
-    /*
-       Trigger the browser download.
-    */
-
-    link.click();
-
-
-    link.remove();
-
-
-    /*
-       Keep Blob URL alive briefly so the browser
-       has enough time to start the download.
-    */
-
-    setTimeout(()=>{
-      URL.revokeObjectURL(blobUrl);
-    },5000);
-
-
+  if(!previewWindow){
     showDownloadNote(
-      "Resume download started ✓"
+      "Opening resume in this tab…"
     );
 
-  }
-  catch(error){
-
-    console.error(
-      "Resume download error:",
-      error
-    );
-
-
-    showDownloadNote(
-      "Resume download failed. Check the backend."
-    );
-
+    window.location.href = resumeUrl;
+    return;
   }
 
+  showDownloadNote(
+    "Resume opened in a new tab ✓"
+  );
 }
 
 
@@ -2078,15 +1973,8 @@ function escapeHTML(text){
 ===================================================== */
 
 function inlineMarkdown(text){
-
   let safe =
     escapeHTML(text);
-
-
-  /*
-     Bold
-     **text**
-  */
 
   safe =
     safe.replace(
@@ -2094,23 +1982,22 @@ function inlineMarkdown(text){
       "<strong>$1</strong>"
     );
 
-
-  /*
-     Bold
-     __text__
-  */
-
   safe =
     safe.replace(
       /__(.+?)__/g,
       "<strong>$1</strong>"
     );
 
-
   /*
-     Inline code
-     `text`
+     Handles project labels such as:
+     *Tools:*       -> Tools:
+     *Description:* -> Description:
   */
+  safe =
+    safe.replace(
+      /(?<!\*)\*([^*\n]+?)\*(?!\*)/g,
+      "<strong>$1</strong>"
+    );
 
   safe =
     safe.replace(
@@ -2118,9 +2005,14 @@ function inlineMarkdown(text){
       "<strong>$1</strong>"
     );
 
+  /* Remove any unmatched Markdown asterisks. */
+  safe =
+    safe.replace(
+      /(?<!\*)\*(?!\*)/g,
+      ""
+    );
 
   return safe;
-
 }
 
 
