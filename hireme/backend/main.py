@@ -22,7 +22,9 @@ load_dotenv()
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 
 if not GROQ_API_KEY:
-    raise RuntimeError("GROQ_API_KEY is not configured.")
+    raise RuntimeError(
+        "GROQ_API_KEY is not configured."
+    )
 
 
 # ============================================================
@@ -38,10 +40,8 @@ client = Groq(
 # MODELS
 # ============================================================
 
-# Main LLM used for HR conversations
 CHAT_MODEL = "openai/gpt-oss-120b"
 
-# Faster LLM used for one-time resume parsing
 RESUME_PARSER_MODEL = "llama-3.1-8b-instant"
 
 
@@ -66,7 +66,7 @@ candidate_resume: dict = {}
 
 
 # ============================================================
-# PYDANTIC DATA MODELS
+# PYDANTIC MODELS
 # ============================================================
 
 class Experience(BaseModel):
@@ -179,9 +179,6 @@ def parse_resume(resume_text: str) -> Resume:
     """
     Uses an LLM to convert the unstructured resume
     into structured Resume data.
-
-    This keeps the LLM as part of the AI Engineering
-    document-processing pipeline.
     """
 
     start_time = time.perf_counter()
@@ -290,9 +287,7 @@ def initialize_resume():
     """
     Reads and parses the resume once during startup.
 
-    The structured resume is then kept in memory.
-
-    HR questions do NOT cause the PDF to be parsed again.
+    The parsed resume is cached in memory.
     """
 
     global candidate_resume
@@ -317,7 +312,7 @@ def initialize_resume():
 
 
         # ----------------------------------------------------
-        # STEP 2: LLM PARSING
+        # STEP 2: PARSE RESUME
         # ----------------------------------------------------
 
         parsed_resume = parse_resume(
@@ -326,7 +321,7 @@ def initialize_resume():
 
 
         # ----------------------------------------------------
-        # STEP 3: CACHE IN MEMORY
+        # STEP 3: CACHE
         # ----------------------------------------------------
 
         candidate_resume["data"] = (
@@ -403,7 +398,7 @@ app = FastAPI(
         "structured data and streaming AI-powered HR Q&A."
     ),
 
-    version="1.0.0",
+    version="2.0.0",
 
     lifespan=lifespan
 )
@@ -451,7 +446,8 @@ def serve_frontend():
         )
 
     return FileResponse(
-        index_file
+        index_file,
+        media_type="text/html"
     )
 
 
@@ -483,31 +479,88 @@ def health_check():
             RESUME_PARSER_MODEL,
 
         "streaming":
-            True
+            True,
+
+        "resume_endpoint":
+            "/download-resume"
     }
 
 
 # ============================================================
-# RESUME
+# RESUME DOWNLOAD
 # ============================================================
 
 @app.get("/download-resume")
 def download_resume():
 
     """
-    Opens/serves the candidate's PDF resume.
+    Forces the browser to download the resume PDF.
 
-    The frontend can open this endpoint in a new tab.
+    Important:
+    Content-Disposition = attachment
+
+    This prevents the browser from opening the PDF
+    inside a new tab / PDF viewer / print page.
     """
 
+    # --------------------------------------------------------
+    # CHECK FILE
+    # --------------------------------------------------------
+
     if not RESUME_PATH.exists():
+
+        print(
+            f"❌ Resume not found: {RESUME_PATH}"
+        )
 
         raise HTTPException(
 
             status_code=404,
 
-            detail="Resume PDF not found."
+            detail=(
+                "Resume PDF not found on server."
+            )
         )
+
+
+    # --------------------------------------------------------
+    # CHECK FILE SIZE
+    # --------------------------------------------------------
+
+    file_size = (
+        RESUME_PATH.stat().st_size
+    )
+
+    if file_size == 0:
+
+        print(
+            "❌ Resume PDF exists but is empty."
+        )
+
+        raise HTTPException(
+
+            status_code=500,
+
+            detail=(
+                "Resume PDF is empty."
+            )
+        )
+
+
+    print(
+        f"📥 Resume download requested: "
+        f"{RESUME_PATH}"
+    )
+
+    print(
+        f"📦 Resume size: "
+        f"{file_size} bytes"
+    )
+
+
+    # --------------------------------------------------------
+    # RETURN PDF
+    # --------------------------------------------------------
 
     return FileResponse(
 
@@ -515,7 +568,31 @@ def download_resume():
 
         media_type="application/pdf",
 
-        filename="Ankit_Kumar_Resume.pdf"
+        filename="Ankit_Kumar_Resume.pdf",
+
+        headers={
+
+            # VERY IMPORTANT
+            #
+            # Forces download instead of opening
+            # the PDF in the browser.
+            "Content-Disposition":
+                'attachment; filename="Ankit_Kumar_Resume.pdf"',
+
+            # Prevent browser caching problems.
+            "Cache-Control":
+                "no-store, no-cache, must-revalidate",
+
+            "Pragma":
+                "no-cache",
+
+            "Expires":
+                "0",
+
+            # Helpful when frontend fetches the response.
+            "Access-Control-Expose-Headers":
+                "Content-Disposition"
+        }
     )
 
 
@@ -534,18 +611,23 @@ def get_info():
 
         return {
 
-            "name": "Candidate",
+            "name":
+                "Candidate",
 
-            "skills": [],
+            "skills":
+                [],
 
-            "total_experience_years": None
+            "total_experience_years":
+                None
         }
 
     return {
 
-        "name": resume.name,
+        "name":
+            resume.name,
 
-        "skills": resume.skills,
+        "skills":
+            resume.skills,
 
         "total_experience_years":
             resume.total_experience_years
@@ -556,7 +638,9 @@ def get_info():
 # BUILD SYSTEM PROMPT
 # ============================================================
 
-def build_system_prompt(resume: Resume) -> str:
+def build_system_prompt(
+    resume: Resume
+) -> str:
 
     resume_json = (
         resume.model_dump_json(
@@ -768,11 +852,11 @@ def chat(request: ChatRequest):
     """
     Streams the LLM response token-by-token.
 
-    The frontend must read the HTTP response stream
-    and progressively display the received text.
+    The frontend progressively displays the response.
     """
 
     request_start = time.perf_counter()
+
 
     # --------------------------------------------------------
     # GET CACHED RESUME
@@ -835,6 +919,7 @@ def chat(request: ChatRequest):
 
         total_characters = 0
 
+
         try:
 
             print(
@@ -842,35 +927,47 @@ def chat(request: ChatRequest):
                 f"{question}"
             )
 
+
             # ------------------------------------------------
             # GROQ STREAM
             # ------------------------------------------------
 
-            stream = client.chat.completions.create(
+            stream = (
+                client
+                .chat
+                .completions
+                .create(
 
-                model=CHAT_MODEL,
+                    model=CHAT_MODEL,
 
-                messages=[
-                    {
-                        "role": "system",
-                        "content": system_prompt
-                    },
-                    {
-                        "role": "user",
-                        "content": question
-                    }
-                ],
+                    messages=[
+                        {
+                            "role":
+                                "system",
 
-                temperature=0.2,
+                            "content":
+                                system_prompt
+                        },
+                        {
+                            "role":
+                                "user",
 
-                max_tokens=500,
+                            "content":
+                                question
+                        }
+                    ],
 
-                stream=True
+                    temperature=0.2,
+
+                    max_tokens=500,
+
+                    stream=True
+                )
             )
 
 
             # ------------------------------------------------
-            # SEND TOKENS TO FRONTEND
+            # READ STREAM
             # ------------------------------------------------
 
             for chunk in stream:
@@ -879,19 +976,20 @@ def chat(request: ChatRequest):
 
                     continue
 
+
                 delta = (
                     chunk
                     .choices[0]
                     .delta
                 )
 
-                content = (
-                    getattr(
-                        delta,
-                        "content",
-                        None
-                    )
+
+                content = getattr(
+                    delta,
+                    "content",
+                    None
                 )
+
 
                 if not content:
 
@@ -899,7 +997,7 @@ def chat(request: ChatRequest):
 
 
                 # ------------------------------------------------
-                # FIRST TOKEN TIMING
+                # FIRST TOKEN
                 # ------------------------------------------------
 
                 if first_token_time is None:
@@ -919,24 +1017,20 @@ def chat(request: ChatRequest):
                 # CLEAN MARKDOWN ASTERISKS
                 # ------------------------------------------------
 
-                content = content.replace(
-                    "**",
-                    ""
-                )
-
-                content = content.replace(
-                    "__",
-                    ""
-                )
-
-
-                total_characters += len(
+                content = (
                     content
+                    .replace("**", "")
+                    .replace("__", "")
+                )
+
+
+                total_characters += (
+                    len(content)
                 )
 
 
                 # ------------------------------------------------
-                # SEND CHUNK
+                # SEND CONTENT
                 # ------------------------------------------------
 
                 yield content
@@ -951,8 +1045,9 @@ def chat(request: ChatRequest):
                 - request_start
             )
 
+
             print(
-                f"✅ Streaming completed"
+                "✅ Streaming completed"
             )
 
             print(
@@ -976,7 +1071,7 @@ def chat(request: ChatRequest):
                 f"❌ Streaming error: {e}"
             )
 
-            # Send an error message through the stream
+
             yield (
                 "\n\nSorry, I encountered an error "
                 "while generating the response."
@@ -991,16 +1086,41 @@ def chat(request: ChatRequest):
 
         generate(),
 
-        media_type="text/plain",
+        media_type="text/plain; charset=utf-8",
 
         headers={
+
             "Cache-Control":
-                "no-cache",
+                "no-cache, no-transform",
 
             "Connection":
                 "keep-alive",
 
             "X-Accel-Buffering":
-                "no"
+                "no",
+
+            "Access-Control-Allow-Origin":
+                "*"
         }
+    )
+
+
+# ============================================================
+# LOCAL DEVELOPMENT
+# ============================================================
+
+if __name__ == "__main__":
+
+    import uvicorn
+
+    uvicorn.run(
+        "main:app",
+        host="0.0.0.0",
+        port=int(
+            os.getenv(
+                "PORT",
+                "8000"
+            )
+        ),
+        reload=True
     )
