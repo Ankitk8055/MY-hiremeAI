@@ -481,9 +481,71 @@ def health_check():
         "streaming":
             True,
 
-        "resume_endpoint":
+        "resume_preview_endpoint":
+            "/resume-preview",
+        "resume_download_endpoint":
             "/download-resume"
     }
+
+
+# ============================================================
+# RESUME HELPERS
+# ============================================================
+
+def validate_resume_file() -> Path:
+    """Validate that the resume exists and is a non-empty file."""
+    if not RESUME_PATH.exists():
+        print(f"❌ Resume not found: {RESUME_PATH}")
+        raise HTTPException(
+            status_code=404,
+            detail=(
+                "Resume PDF not found on server. "
+                "Make sure my_resume.pdf is deployed inside the backend folder."
+            )
+        )
+
+    if not RESUME_PATH.is_file():
+        raise HTTPException(
+            status_code=500,
+            detail="Resume path exists but is not a file."
+        )
+
+    file_size = RESUME_PATH.stat().st_size
+
+    if file_size == 0:
+        print("❌ Resume PDF exists but is empty.")
+        raise HTTPException(
+            status_code=500,
+            detail="Resume PDF is empty."
+        )
+
+    print(f"📄 Resume ready: {RESUME_PATH} ({file_size} bytes)")
+    return RESUME_PATH
+
+
+# ============================================================
+# RESUME PREVIEW
+# ============================================================
+
+@app.get("/resume-preview")
+def preview_resume():
+    """Open the resume in the browser PDF viewer."""
+    resume_file = validate_resume_file()
+
+    return FileResponse(
+        path=resume_file,
+        media_type="application/pdf",
+        filename="Ankit_Kumar_Resume.pdf",
+        headers={
+            "Content-Disposition":
+                'inline; filename="Ankit_Kumar_Resume.pdf"',
+            "Cache-Control":
+                "no-store, no-cache, must-revalidate",
+            "Pragma": "no-cache",
+            "Expires": "0",
+            "X-Content-Type-Options": "nosniff"
+        }
+    )
 
 
 # ============================================================
@@ -492,106 +554,21 @@ def health_check():
 
 @app.get("/download-resume")
 def download_resume():
-
-    """
-    Forces the browser to download the resume PDF.
-
-    Important:
-    Content-Disposition = attachment
-
-    This prevents the browser from opening the PDF
-    inside a new tab / PDF viewer / print page.
-    """
-
-    # --------------------------------------------------------
-    # CHECK FILE
-    # --------------------------------------------------------
-
-    if not RESUME_PATH.exists():
-
-        print(
-            f"❌ Resume not found: {RESUME_PATH}"
-        )
-
-        raise HTTPException(
-
-            status_code=404,
-
-            detail=(
-                "Resume PDF not found on server."
-            )
-        )
-
-
-    # --------------------------------------------------------
-    # CHECK FILE SIZE
-    # --------------------------------------------------------
-
-    file_size = (
-        RESUME_PATH.stat().st_size
-    )
-
-    if file_size == 0:
-
-        print(
-            "❌ Resume PDF exists but is empty."
-        )
-
-        raise HTTPException(
-
-            status_code=500,
-
-            detail=(
-                "Resume PDF is empty."
-            )
-        )
-
-
-    print(
-        f"📥 Resume download requested: "
-        f"{RESUME_PATH}"
-    )
-
-    print(
-        f"📦 Resume size: "
-        f"{file_size} bytes"
-    )
-
-
-    # --------------------------------------------------------
-    # RETURN PDF
-    # --------------------------------------------------------
+    """Force a direct PDF download."""
+    resume_file = validate_resume_file()
 
     return FileResponse(
-
-        path=RESUME_PATH,
-
+        path=resume_file,
         media_type="application/pdf",
-
         filename="Ankit_Kumar_Resume.pdf",
-
         headers={
-
-            # VERY IMPORTANT
-            #
-            # Forces download instead of opening
-            # the PDF in the browser.
             "Content-Disposition":
                 'attachment; filename="Ankit_Kumar_Resume.pdf"',
-
-            # Prevent browser caching problems.
             "Cache-Control":
                 "no-store, no-cache, must-revalidate",
-
-            "Pragma":
-                "no-cache",
-
-            "Expires":
-                "0",
-
-            # Helpful when frontend fetches the response.
-            "Access-Control-Expose-Headers":
-                "Content-Disposition"
+            "Pragma": "no-cache",
+            "Expires": "0",
+            "X-Content-Type-Options": "nosniff"
         }
     )
 
@@ -1014,14 +991,11 @@ def chat(request: ChatRequest):
 
 
                 # ------------------------------------------------
-                # CLEAN MARKDOWN ASTERISKS
+                # SEND RAW TEXT TO FRONTEND FORMATTER
                 # ------------------------------------------------
-
-                content = (
-                    content
-                    .replace("**", "")
-                    .replace("__", "")
-                )
+                # Do not strip Markdown per streaming chunk.
+                # A marker such as ** can be split across chunks.
+                # The frontend formats the complete accumulated text.
 
 
                 total_characters += (
