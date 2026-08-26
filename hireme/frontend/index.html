@@ -7,7 +7,6 @@
 <title>Hire Me AI Portfolio</title>
 
 <style>
-
 @import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap');
 
 :root{
@@ -41,7 +40,9 @@ body{
   overflow:hidden;
 }
 
-/* ================= DESKTOP ================= */
+/* =====================================================
+   DESKTOP
+===================================================== */
 
 .desktop{
   position:relative;
@@ -49,13 +50,33 @@ body{
   height:100vh;
 
   background:
-    radial-gradient(1400px 900px at 20% -10%, var(--sky-1) 0%, transparent 45%),
-    radial-gradient(1300px 900px at 70% 0%, var(--sky-2) 0%, transparent 55%),
-    radial-gradient(1200px 1000px at 50% 120%, var(--fog) 0%, transparent 60%),
-    linear-gradient(190deg,#f0a06a 0%,#c9587a 32%,#6a4a86 62%,var(--sky-4) 100%);
+    radial-gradient(
+      1400px 900px at 20% -10%,
+      var(--sky-1) 0%,
+      transparent 45%
+    ),
+    radial-gradient(
+      1300px 900px at 70% 0%,
+      var(--sky-2) 0%,
+      transparent 55%
+    ),
+    radial-gradient(
+      1200px 1000px at 50% 120%,
+      var(--fog) 0%,
+      transparent 60%
+    ),
+    linear-gradient(
+      190deg,
+      #f0a06a 0%,
+      #c9587a 32%,
+      #6a4a86 62%,
+      var(--sky-4) 100%
+    );
 }
 
-/* ================= MENU ================= */
+/* =====================================================
+   MENU BAR
+===================================================== */
 
 .menubar{
   position:absolute;
@@ -105,10 +126,18 @@ body{
   height:13px;
   border-radius:50%;
 
-  background:conic-gradient(#ff6a3d,#c65bff,#3dc9a0,#ff6a3d);
+  background:
+    conic-gradient(
+      #ff6a3d,
+      #c65bff,
+      #3dc9a0,
+      #ff6a3d
+    );
 }
 
-/* ================= DESKTOP ICONS ================= */
+/* =====================================================
+   DESKTOP ICONS
+===================================================== */
 
 .desktop-icons{
   position:absolute;
@@ -134,7 +163,6 @@ body{
   border-radius:10px;
 
   cursor:pointer;
-
   transition:.15s;
 }
 
@@ -167,20 +195,43 @@ body{
   color:white;
   font-size:11px;
   text-align:center;
+
   text-shadow:0 1px 3px rgba(0,0,0,.5);
 }
 
-/* ================= COLORS ================= */
+/* ICON COLORS */
 
-.i1{background:linear-gradient(160deg,#ffa06b,#ff5b3d);}
-.i2{background:linear-gradient(160deg,#ffc98a,#ff5b7f);}
-.i3{background:linear-gradient(160deg,#7fe0ff,#3a7bd5);}
-.i4{background:linear-gradient(160deg,#4fe0b0,#1a9b78);}
-.i5{background:linear-gradient(160deg,#c68bff,#7a5be8);}
-.i6{background:linear-gradient(160deg,#f6f6f8,#c9c9d4);}
-.i7{background:linear-gradient(160deg,#e6e6ea,#b8b8c4);}
+.i1{
+  background:linear-gradient(160deg,#ffa06b,#ff5b3d);
+}
 
-/* ================= WINDOWS ================= */
+.i2{
+  background:linear-gradient(160deg,#ffc98a,#ff5b7f);
+}
+
+.i3{
+  background:linear-gradient(160deg,#7fe0ff,#3a7bd5);
+}
+
+.i4{
+  background:linear-gradient(160deg,#4fe0b0,#1a9b78);
+}
+
+.i5{
+  background:linear-gradient(160deg,#c68bff,#7a5be8);
+}
+
+.i6{
+  background:linear-gradient(160deg,#f6f6f8,#c9c9d4);
+}
+
+.i7{
+  background:linear-gradient(160deg,#e6e6ea,#b8b8c4);
+}
+
+/* =====================================================
+   WINDOWS
+===================================================== */
 
 .app-window{
   position:absolute;
@@ -196,7 +247,6 @@ body{
   border-radius:22px;
 
   background:rgba(255,255,255,.28);
-
   backdrop-filter:blur(30px);
 
   border:1px solid rgba(255,255,255,.6);
@@ -211,7 +261,9 @@ body{
   display:flex;
 }
 
-/* ================= TITLEBAR ================= */
+/* =====================================================
+   TITLE BAR
+===================================================== */
 
 .titlebar{
   height:42px;
@@ -220,11 +272,9 @@ body{
   align-items:center;
 
   gap:8px;
-
   padding:0 14px;
 
   background:rgba(255,255,255,.18);
-
   border-bottom:1px solid rgba(255,255,255,.25);
 
   cursor:grab;
@@ -240,12 +290,21 @@ body{
   cursor:pointer;
 }
 
-.r{background:#ff5f57;}
-.y{background:#febc2e;}
-.g{background:#28c840;}
+.r{
+  background:#ff5f57;
+}
+
+.y{
+  background:#febc2e;
+}
+
+.g{
+  background:#28c840;
+}
 
 .tbtitle{
   flex:1;
+
   text-align:center;
 
   color:var(--ink-soft);
@@ -256,14 +315,15 @@ body{
   margin-right:46px;
 }
 
-/* ================= CHAT ================= */
+/* =====================================================
+   CHAT HEADER
+===================================================== */
 
 .chat-head{
   display:flex;
   align-items:center;
 
   gap:10px;
-
   padding:12px 16px;
 
   border-bottom:1px solid rgba(255,255,255,.25);
@@ -280,15 +340,15 @@ body{
   justify-content:center;
 
   color:white;
-
   font-weight:bold;
 
-  background:conic-gradient(
-    var(--accent),
-    #ff9a5b,
-    var(--accent-2),
-    var(--accent)
-  );
+  background:
+    conic-gradient(
+      var(--accent),
+      #ff9a5b,
+      var(--accent-2),
+      var(--accent)
+    );
 }
 
 .name{
@@ -301,6 +361,10 @@ body{
   font-size:11px;
 }
 
+/* =====================================================
+   MESSAGES
+===================================================== */
+
 .messages{
   flex:1;
 
@@ -312,6 +376,8 @@ body{
   flex-direction:column;
 
   gap:12px;
+
+  scroll-behavior:smooth;
 }
 
 .msg{
@@ -322,10 +388,11 @@ body{
   border-radius:16px;
 
   font-size:13px;
-
   line-height:1.55;
 
   animation:fadeIn .2s ease;
+
+  overflow-wrap:anywhere;
 }
 
 @keyframes fadeIn{
@@ -333,6 +400,7 @@ body{
     opacity:0;
     transform:translateY(5px);
   }
+
   to{
     opacity:1;
     transform:translateY(0);
@@ -361,32 +429,80 @@ body{
   border-bottom-right-radius:4px;
 }
 
-/* AI formatted response */
+/* =====================================================
+   AI FORMATTING
+===================================================== */
+
+.ai-text{
+  margin:5px 0;
+  white-space:normal;
+}
 
 .ai-heading{
   font-family:Sora;
+
   font-size:14px;
   font-weight:700;
 
   color:#d84d2f;
 
-  margin:8px 0 6px;
+  margin:10px 0 6px;
 }
 
-.ai-bullet{
-  margin:4px 0;
+.ai-heading strong{
+  font-weight:800;
+}
+
+.ai-list{
+  display:block;
+
+  margin:8px 0 10px 20px;
+
+  padding-left:20px;
+
+  list-style-type:disc;
+}
+
+.ai-list li{
+  display:list-item;
+
+  margin:6px 0;
 
   padding-left:4px;
+
+  line-height:1.5;
 }
 
-.ai-text{
-  margin:4px 0;
+.ai-list.ordered{
+  list-style-type:decimal;
 }
 
-/* ================= CHIPS ================= */
+.ai-list li strong,
+.ai-text strong{
+  font-weight:700;
+}
+
+/*
+   IMPORTANT:
+   Keep bullet markers visible even when browser
+   styling changes.
+*/
+
+.ai-list::marker{
+  font-size:1em;
+}
+
+.ai-list li::marker{
+  color:currentColor;
+}
+
+/* =====================================================
+   QUICK BUTTONS
+===================================================== */
 
 .chips{
   display:flex;
+
   flex-wrap:wrap;
 
   gap:8px;
@@ -404,19 +520,85 @@ body{
   font-size:12px;
 
   cursor:pointer;
+
+  transition:.15s;
+}
+
+.chip:hover{
+  transform:translateY(-1px);
+}
+
+.chip:active{
+  transform:scale(.97);
 }
 
 .chip.primary{
-  background:linear-gradient(135deg,var(--accent),#ff5b7a);
+  background:
+    linear-gradient(
+      135deg,
+      var(--accent),
+      #ff5b7a
+    );
+
   color:white;
 }
 
-/* ================= TYPING ================= */
+/* =====================================================
+   DOWNLOAD MESSAGE
+===================================================== */
+
+.download-note{
+  position:fixed;
+
+  left:50%;
+  bottom:86px;
+
+  transform:translateX(-50%);
+
+  z-index:2000;
+
+  padding:10px 16px;
+
+  border-radius:14px;
+
+  color:white;
+
+  background:rgba(20,10,25,.82);
+
+  backdrop-filter:blur(12px);
+
+  font-size:12px;
+
+  opacity:0;
+
+  pointer-events:none;
+
+  transition:
+    opacity .2s ease,
+    transform .2s ease;
+
+  max-width:90vw;
+
+  text-align:center;
+}
+
+.download-note.show{
+  opacity:1;
+
+  transform:
+    translateX(-50%)
+    translateY(-4px);
+}
+
+/* =====================================================
+   TYPING INDICATOR
+===================================================== */
 
 .typing{
   align-self:flex-start;
 
   display:flex;
+
   gap:5px;
 
   padding:12px 14px;
@@ -455,7 +637,9 @@ body{
   }
 }
 
-/* ================= COMPOSER ================= */
+/* =====================================================
+   COMPOSER
+===================================================== */
 
 .composer{
   display:flex;
@@ -470,8 +654,9 @@ body{
 .composer input{
   flex:1;
 
-  border:none;
+  min-width:0;
 
+  border:none;
   outline:none;
 
   border-radius:20px;
@@ -483,9 +668,15 @@ body{
   background:rgba(255,255,255,.65);
 }
 
+.composer input:disabled{
+  opacity:.65;
+}
+
 .send-btn{
   width:38px;
   height:38px;
+
+  flex-shrink:0;
 
   border:none;
 
@@ -495,14 +686,32 @@ body{
 
   cursor:pointer;
 
-  background:linear-gradient(135deg,var(--accent),#ff5b7a);
+  background:
+    linear-gradient(
+      135deg,
+      var(--accent),
+      #ff5b7a
+    );
+
+  transition:.15s;
+}
+
+.send-btn:hover{
+  transform:scale(1.05);
+}
+
+.send-btn:active{
+  transform:scale(.95);
 }
 
 .send-btn:disabled{
   opacity:.5;
+  cursor:not-allowed;
 }
 
-/* ================= SETTINGS ================= */
+/* =====================================================
+   SETTINGS
+===================================================== */
 
 .tint-row{
   padding:20px;
@@ -517,7 +726,9 @@ body{
   width:100%;
 }
 
-/* ================= TRASH ================= */
+/* =====================================================
+   TRASH
+===================================================== */
 
 .plain-body{
   flex:1;
@@ -535,7 +746,9 @@ body{
   padding:20px;
 }
 
-/* ================= DOCK ================= */
+/* =====================================================
+   DOCK
+===================================================== */
 
 .dock{
   position:absolute;
@@ -578,6 +791,8 @@ body{
   cursor:pointer;
 
   transition:.2s;
+
+  flex-shrink:0;
 }
 
 .dock .icon:hover{
@@ -589,9 +804,13 @@ body{
   height:35px;
 
   background:rgba(255,255,255,.5);
+
+  flex-shrink:0;
 }
 
-/* ================= RIPPLE ================= */
+/* =====================================================
+   RIPPLE
+===================================================== */
 
 .ripple{
   position:fixed;
@@ -606,6 +825,8 @@ body{
   background:rgba(255,255,255,.8);
 
   animation:ripple .6s forwards;
+
+  z-index:5000;
 }
 
 @keyframes ripple{
@@ -616,7 +837,24 @@ body{
 }
 
 /* =====================================================
-   MOBILE RESPONSIVE
+   SCROLLBAR
+===================================================== */
+
+.messages::-webkit-scrollbar{
+  width:6px;
+}
+
+.messages::-webkit-scrollbar-track{
+  background:transparent;
+}
+
+.messages::-webkit-scrollbar-thumb{
+  background:rgba(0,0,0,.18);
+  border-radius:10px;
+}
+
+/* =====================================================
+   MOBILE
 ===================================================== */
 
 @media(max-width:768px){
@@ -642,14 +880,18 @@ body{
 
   .desktop-icons{
     top:auto;
+
     bottom:82px;
+
     left:10px;
     right:10px;
 
     width:auto;
 
     display:grid;
-    grid-template-columns:repeat(4,1fr);
+
+    grid-template-columns:
+      repeat(4,1fr);
 
     gap:10px;
   }
@@ -662,6 +904,7 @@ body{
   .glyph{
     width:46px;
     height:46px;
+
     font-size:21px;
   }
 
@@ -670,9 +913,11 @@ body{
   }
 
   .app-window{
-    width:calc(100vw - 16px)!important;
+    width:
+      calc(100vw - 16px)!important;
 
-    height:calc(100vh - 110px)!important;
+    height:
+      calc(100vh - 110px)!important;
 
     left:8px!important;
     top:40px!important;
@@ -701,14 +946,25 @@ body{
     font-size:16px;
   }
 
+  .download-note{
+    bottom:78px;
+
+    max-width:
+      calc(100vw - 30px);
+
+    text-align:center;
+  }
+
   .dock{
-    width:calc(100vw - 20px);
+    width:
+      calc(100vw - 20px);
 
     overflow-x:auto;
 
     justify-content:flex-start;
 
     left:10px;
+
     transform:none;
 
     bottom:8px;
@@ -717,9 +973,7 @@ body{
   .dock::-webkit-scrollbar{
     display:none;
   }
-
 }
-
 </style>
 </head>
 
@@ -727,7 +981,9 @@ body{
 
 <div class="desktop" id="desktop">
 
-  <!-- ================= MENU ================= -->
+  <!-- =====================================================
+       MENU
+  ===================================================== -->
 
   <div class="menubar">
 
@@ -737,7 +993,10 @@ body{
 
       <div class="menu-items">
 
-        <span><b>Portfolio Assistant</b></span>
+        <span>
+          <b>Portfolio Assistant</b>
+        </span>
+
         <span>File</span>
         <span>Edit</span>
         <span>View</span>
@@ -751,95 +1010,186 @@ body{
     <div class="right">
 
       <span class="siri-dot"></span>
+
       <span>🔋100%</span>
+
       <span>📶</span>
+
       <span id="clock">--:--</span>
 
     </div>
 
   </div>
 
-  <!-- ================= DESKTOP ICONS ================= -->
+
+  <!-- =====================================================
+       DESKTOP ICONS
+  ===================================================== -->
 
   <div class="desktop-icons">
 
-    <div class="dicon" data-app="chat"
-      data-q="Tell me about yourself and your background.">
+    <div
+      class="dicon"
+      data-app="chat"
+      data-q="Tell me about yourself and your background."
+    >
 
-      <div class="glyph i2">💬</div>
-      <div class="label">Ask Me<br>Anything</div>
+      <div class="glyph i2">
+        💬
+      </div>
 
-    </div>
-
-    <div class="dicon" id="resumeIcon">
-
-      <div class="glyph i1">📄</div>
-      <div class="label">My Resume.pdf</div>
-
-    </div>
-
-    <div class="dicon" data-app="chat"
-      data-q="Why should we hire you?">
-
-      <div class="glyph i5">🏆</div>
-      <div class="label">Why Hire Me</div>
+      <div class="label">
+        Ask Me<br>Anything
+      </div>
 
     </div>
 
-    <div class="dicon" data-app="chat"
-      data-q="What projects have you worked on?">
 
-      <div class="glyph i3">🚀</div>
-      <div class="label">Projects</div>
+    <div
+      class="dicon"
+      id="resumeIcon"
+    >
 
-    </div>
+      <div class="glyph i1">
+        📄
+      </div>
 
-    <div class="dicon" data-app="chat"
-      data-q="What are your key skills?">
-
-      <div class="glyph i4">🛠️</div>
-      <div class="label">Skills</div>
-
-    </div>
-
-    <div class="dicon" data-app="chat"
-      data-q="How can I get in touch with you?">
-
-      <div class="glyph i2">📬</div>
-      <div class="label">Contact Me</div>
+      <div class="label">
+        My Resume.pdf
+      </div>
 
     </div>
 
-    <div class="dicon" data-app="settings">
 
-      <div class="glyph i6">⚙️</div>
-      <div class="label">System<br>Settings</div>
+    <div
+      class="dicon"
+      data-app="chat"
+      data-q="Why should we hire you?"
+    >
+
+      <div class="glyph i5">
+        🏆
+      </div>
+
+      <div class="label">
+        Why Hire Me
+      </div>
 
     </div>
 
-    <div class="dicon" data-app="trash">
 
-      <div class="glyph i7">🗑️</div>
-      <div class="label">Trash</div>
+    <div
+      class="dicon"
+      data-app="chat"
+      data-q="What projects have you worked on?"
+    >
+
+      <div class="glyph i3">
+        🚀
+      </div>
+
+      <div class="label">
+        Projects
+      </div>
+
+    </div>
+
+
+    <div
+      class="dicon"
+      data-app="chat"
+      data-q="What are your key skills?"
+    >
+
+      <div class="glyph i4">
+        🛠️
+      </div>
+
+      <div class="label">
+        Skills
+      </div>
+
+    </div>
+
+
+    <div
+      class="dicon"
+      data-app="chat"
+      data-q="How can I get in touch with you?"
+    >
+
+      <div class="glyph i2">
+        📬
+      </div>
+
+      <div class="label">
+        Contact Me
+      </div>
+
+    </div>
+
+
+    <div
+      class="dicon"
+      data-app="settings"
+    >
+
+      <div class="glyph i6">
+        ⚙️
+      </div>
+
+      <div class="label">
+        System<br>Settings
+      </div>
+
+    </div>
+
+
+    <div
+      class="dicon"
+      data-app="trash"
+    >
+
+      <div class="glyph i7">
+        🗑️
+      </div>
+
+      <div class="label">
+        Trash
+      </div>
 
     </div>
 
   </div>
 
-  <!-- ================= CHAT WINDOW ================= -->
 
-  <div class="app-window visible"
-       id="win-chat"
-       style="top:52px;left:calc(50% - 220px)">
+  <!-- =====================================================
+       CHAT WINDOW
+  ===================================================== -->
+
+  <div
+    class="app-window visible"
+    id="win-chat"
+    style="top:52px;left:calc(50% - 220px)"
+  >
 
     <div class="titlebar">
 
-      <button class="tbdot r"
-        onclick="closeWindow('win-chat')"></button>
+      <button
+        class="tbdot r"
+        onclick="closeWindow('win-chat')"
+        title="Close"
+      ></button>
 
-      <button class="tbdot y"></button>
+      <button
+        class="tbdot y"
+        title="Minimize"
+      ></button>
 
-      <button class="tbdot g"></button>
+      <button
+        class="tbdot g"
+        title="Maximize"
+      ></button>
 
       <div class="tbtitle">
         Portfolio Assistant — Chat
@@ -847,14 +1197,22 @@ body{
 
     </div>
 
+
     <div class="chat-head">
 
-      <div class="avatar" id="avatarInitial">A</div>
+      <div
+        class="avatar"
+        id="avatarInitial"
+      >
+        A
+      </div>
 
       <div>
 
-        <div class="name"
-          id="candidateName">
+        <div
+          class="name"
+          id="candidateName"
+        >
           ANKIT KUMAR
         </div>
 
@@ -866,66 +1224,78 @@ body{
 
     </div>
 
-    <div class="messages" id="messages">
 
-      <div class="msg bot" id="welcomeMsg">
+    <div
+      class="messages"
+      id="messages"
+    >
 
+      <div
+        class="msg bot"
+        id="welcomeMsg"
+      >
         👋 Hi there! Ask me anything about my background,
         or tap a quick option below to get started.
-
       </div>
+
 
       <div class="chips">
 
-        <button class="chip primary"
-          data-q="Tell me about yourself and your background.">
-
+        <button
+          class="chip primary"
+          data-q="Tell me about yourself and your background."
+        >
           💬 Ask a question
-
         </button>
 
-        <button class="chip"
-          id="resumeChip">
 
+        <button
+          class="chip"
+          id="resumeChip"
+        >
           📄 Check my resume
-
         </button>
 
-        <button class="chip"
-          data-q="Why should we hire you?">
 
+        <button
+          class="chip"
+          data-q="Why should you hire me?"
+        >
           🏆 Why should you hire me?
-
         </button>
 
       </div>
 
+
       <div class="chips">
 
-        <button class="chip"
-          data-q="What projects have you worked on?">
-
+        <button
+          class="chip"
+          data-q="What projects have you worked on?"
+        >
           🚀 View projects
-
         </button>
 
-        <button class="chip"
-          data-q="What are your key skills?">
 
+        <button
+          class="chip"
+          data-q="What are your key skills?"
+        >
           🛠️ My skill set
-
         </button>
 
-        <button class="chip"
-          data-q="How can I get in touch with you?">
 
+        <button
+          class="chip"
+          data-q="How can I get in touch with you?"
+        >
           📬 Contact me
-
         </button>
 
       </div>
 
     </div>
+
 
     <div class="composer">
 
@@ -933,32 +1303,47 @@ body{
         type="text"
         id="chatInput"
         placeholder="Type your question here..."
+        autocomplete="off"
       >
 
       <button
         class="send-btn"
-        id="sendBtn">
-
+        id="sendBtn"
+        type="button"
+        title="Send"
+      >
         ➤
-
       </button>
 
     </div>
 
   </div>
 
-  <!-- ================= SETTINGS ================= -->
 
-  <div class="app-window"
-       id="win-settings"
-       style="top:90px;left:calc(50% - 160px);width:340px;height:220px">
+  <!-- =====================================================
+       SETTINGS
+  ===================================================== -->
+
+  <div
+    class="app-window"
+    id="win-settings"
+    style="
+      top:90px;
+      left:calc(50% - 160px);
+      width:340px;
+      height:220px;
+    "
+  >
 
     <div class="titlebar">
 
-      <button class="tbdot r"
-        onclick="closeWindow('win-settings')"></button>
+      <button
+        class="tbdot r"
+        onclick="closeWindow('win-settings')"
+      ></button>
 
       <button class="tbdot y"></button>
+
       <button class="tbdot g"></button>
 
       <div class="tbtitle">
@@ -967,44 +1352,65 @@ body{
 
     </div>
 
+
     <div class="tint-row">
 
       <label>
         Liquid Glass intensity
       </label>
 
-      <input type="range"
+      <input
+        type="range"
         min="0"
         max="100"
         value="65"
-        class="tint-slider">
+        class="tint-slider"
+        id="glassSlider"
+      >
+
 
       <label>
         Desktop tint
       </label>
 
-      <input type="range"
+      <input
+        type="range"
         min="0"
         max="100"
         value="30"
-        class="tint-slider">
+        class="tint-slider"
+        id="tintSlider"
+      >
 
     </div>
 
   </div>
 
-  <!-- ================= TRASH ================= -->
 
-  <div class="app-window"
-       id="win-trash"
-       style="top:120px;left:calc(50% - 150px);width:320px;height:260px">
+  <!-- =====================================================
+       TRASH
+  ===================================================== -->
+
+  <div
+    class="app-window"
+    id="win-trash"
+    style="
+      top:120px;
+      left:calc(50% - 150px);
+      width:320px;
+      height:260px;
+    "
+  >
 
     <div class="titlebar">
 
-      <button class="tbdot r"
-        onclick="closeWindow('win-trash')"></button>
+      <button
+        class="tbdot r"
+        onclick="closeWindow('win-trash')"
+      ></button>
 
       <button class="tbdot y"></button>
+
       <button class="tbdot g"></button>
 
       <div class="tbtitle">
@@ -1012,6 +1418,7 @@ body{
       </div>
 
     </div>
+
 
     <div class="plain-body">
 
@@ -1027,76 +1434,108 @@ body{
 
   </div>
 
-  <!-- ================= DOCK ================= -->
+
+  <!-- =====================================================
+       DOCK
+  ===================================================== -->
 
   <div class="dock">
 
-    <div class="icon i2"
+    <div
+      class="icon i2"
       data-app="chat"
-      data-q="Tell me about yourself and your background.">
-
+      data-q="Tell me about yourself and your background."
+      title="Ask Me Anything"
+    >
       💬
-
     </div>
 
-    <div class="icon i1"
-      id="dockResume">
 
+    <div
+      class="icon i1"
+      id="dockResume"
+      title="Download Resume"
+    >
       📄
-
     </div>
 
-    <div class="icon i5"
-      data-app="chat"
-      data-q="Why should we hire you?">
 
+    <div
+      class="icon i5"
+      data-app="chat"
+      data-q="Why should we hire you?"
+      title="Why Hire Me"
+    >
       🏆
-
     </div>
 
-    <div class="icon i3"
-      data-app="chat"
-      data-q="What projects have you worked on?">
 
+    <div
+      class="icon i3"
+      data-app="chat"
+      data-q="What projects have you worked on?"
+      title="Projects"
+    >
       🚀
-
     </div>
 
-    <div class="icon i4"
-      data-app="chat"
-      data-q="What are your key skills?">
 
+    <div
+      class="icon i4"
+      data-app="chat"
+      data-q="What are your key skills?"
+      title="Skills"
+    >
       🛠️
-
     </div>
 
-    <div class="icon i2"
+
+    <div
+      class="icon i2"
       data-app="chat"
-      data-q="How can I get in touch with you?">
-
+      data-q="How can I get in touch with you?"
+      title="Contact"
+    >
       📬
-
     </div>
+
 
     <div class="sep"></div>
 
-    <div class="icon i6"
-      data-app="settings">
 
+    <div
+      class="icon i6"
+      data-app="settings"
+      title="Settings"
+    >
       ⚙️
-
     </div>
 
-    <div class="icon i7"
-      data-app="trash">
 
+    <div
+      class="icon i7"
+      data-app="trash"
+      title="Trash"
+    >
       🗑️
-
     </div>
 
   </div>
 
 </div>
+
+
+<!-- =====================================================
+     DOWNLOAD STATUS
+===================================================== -->
+
+<div
+  class="download-note"
+  id="downloadNote"
+>
+  Preparing your resume download…
+</div>
+
 
 <script>
 
@@ -1105,7 +1544,7 @@ body{
 ===================================================== */
 
 const API_BASE =
-"https://my-hiremeai-1.onrender.com";
+  "https://my-hiremeai-1.onrender.com";
 
 
 /* =====================================================
@@ -1114,14 +1553,19 @@ const API_BASE =
 
 function updateClock(){
 
-  const now=new Date();
+  const now = new Date();
 
-  document.getElementById("clock").textContent=
-  now.toLocaleString("en-US",{
-    weekday:"short",
-    hour:"2-digit",
-    minute:"2-digit"
-  }).replace(",","");
+  const clock =
+    document.getElementById("clock");
+
+  if(!clock) return;
+
+  clock.textContent =
+    now.toLocaleString("en-US",{
+      weekday:"short",
+      hour:"2-digit",
+      minute:"2-digit"
+    }).replace(",","");
 
 }
 
@@ -1131,117 +1575,353 @@ setInterval(updateClock,30000);
 
 
 /* =====================================================
-   WINDOWS
+   WINDOW FUNCTIONS
 ===================================================== */
 
 function openWindow(id){
 
-  document.getElementById(id)
-  ?.classList.add("visible");
+  const windowElement =
+    document.getElementById(id);
+
+  if(windowElement){
+    windowElement.classList.add("visible");
+  }
 
 }
 
+
 function closeWindow(id){
 
-  document.getElementById(id)
-  ?.classList.remove("visible");
+  const windowElement =
+    document.getElementById(id);
+
+  if(windowElement){
+    windowElement.classList.remove("visible");
+  }
 
 }
 
 
 /* =====================================================
-   RESUME
+   DOWNLOAD MESSAGE
 ===================================================== */
 
-function openResume(){
+function showDownloadNote(message){
 
-  window.open(
-    API_BASE + "/download-resume",
-    "_blank"
+  const note =
+    document.getElementById("downloadNote");
+
+  if(!note) return;
+
+  note.textContent = message;
+
+  note.classList.add("show");
+
+  clearTimeout(
+    showDownloadNote.timeout
+  );
+
+  showDownloadNote.timeout =
+    setTimeout(()=>{
+      note.classList.remove("show");
+    },2500);
+
+}
+
+
+/* =====================================================
+   RESUME DOWNLOAD
+   -----------------------------------------------------
+   The old version opened the endpoint in another tab
+   when fetch failed. That could send the browser to a
+   PDF/print viewer.
+
+   This version first downloads the PDF as a Blob.
+===================================================== */
+
+async function openResume(){
+
+  const resumeUrl =
+    API_BASE + "/download-resume";
+
+  showDownloadNote(
+    "Preparing your resume download…"
+  );
+
+  try{
+
+    const response =
+      await fetch(resumeUrl,{
+        method:"GET",
+        mode:"cors",
+        credentials:"omit",
+        cache:"no-store"
+      });
+
+
+    if(!response.ok){
+
+      throw new Error(
+        "Resume download failed: HTTP " +
+        response.status
+      );
+
+    }
+
+
+    const contentType =
+      (
+        response.headers.get(
+          "content-type"
+        ) || ""
+      ).toLowerCase();
+
+
+    /*
+       Make sure we actually received a PDF.
+       Some backend errors return HTML/JSON.
+    */
+
+    if(
+      !contentType.includes("application/pdf") &&
+      !contentType.includes("application/octet-stream")
+    ){
+
+      const text =
+        await response.text();
+
+      throw new Error(
+        "Server did not return a PDF. " +
+        "Received: " +
+        contentType +
+        " " +
+        text.substring(0,120)
+      );
+
+    }
+
+
+    const blob =
+      await response.blob();
+
+
+    if(!blob || blob.size === 0){
+
+      throw new Error(
+        "The resume file is empty."
+      );
+
+    }
+
+
+    const blobUrl =
+      URL.createObjectURL(blob);
+
+
+    const link =
+      document.createElement("a");
+
+
+    link.href = blobUrl;
+
+    link.download =
+      "Ankit_Kumar_Resume.pdf";
+
+    link.style.display = "none";
+
+    document.body.appendChild(link);
+
+
+    /*
+       Trigger the browser download.
+    */
+
+    link.click();
+
+
+    link.remove();
+
+
+    /*
+       Keep Blob URL alive briefly so the browser
+       has enough time to start the download.
+    */
+
+    setTimeout(()=>{
+      URL.revokeObjectURL(blobUrl);
+    },5000);
+
+
+    showDownloadNote(
+      "Resume download started ✓"
+    );
+
+  }
+  catch(error){
+
+    console.error(
+      "Resume download error:",
+      error
+    );
+
+
+    showDownloadNote(
+      "Resume download failed. Check the backend."
+    );
+
+  }
+
+}
+
+
+/* =====================================================
+   RESUME BUTTONS
+===================================================== */
+
+const resumeIcon =
+  document.getElementById("resumeIcon");
+
+if(resumeIcon){
+
+  resumeIcon.addEventListener(
+    "click",
+    openResume
   );
 
 }
 
-document.getElementById("resumeIcon")
-.addEventListener("click",openResume);
 
-document.getElementById("dockResume")
-.addEventListener("click",openResume);
+const dockResume =
+  document.getElementById("dockResume");
 
-document.getElementById("resumeChip")
-.addEventListener("click",openResume);
+if(dockResume){
+
+  dockResume.addEventListener(
+    "click",
+    openResume
+  );
+
+}
+
+
+const resumeChip =
+  document.getElementById("resumeChip");
+
+if(resumeChip){
+
+  resumeChip.addEventListener(
+    "click",
+    openResume
+  );
+
+}
 
 
 /* =====================================================
    ICON ACTIONS
 ===================================================== */
 
-document.querySelectorAll(".dicon").forEach(icon=>{
+function handleAppClick(icon){
 
-  icon.addEventListener("click",()=>{
+  const app =
+    icon.dataset.app;
 
-    const app=icon.dataset.app;
-    const q=icon.dataset.q;
+  const question =
+    icon.dataset.q;
 
-    if(app==="chat"){
 
-      openWindow("win-chat");
+  if(app === "chat"){
 
-      if(q) sendQuestion(q);
+    openWindow("win-chat");
 
+    if(question){
+      sendQuestion(question);
     }
 
-    if(app==="settings")
-      openWindow("win-settings");
+  }
 
-    if(app==="trash")
-      openWindow("win-trash");
+
+  if(app === "settings"){
+
+    openWindow("win-settings");
+
+  }
+
+
+  if(app === "trash"){
+
+    openWindow("win-trash");
+
+  }
+
+}
+
+
+/* Desktop icons */
+
+document
+  .querySelectorAll(".dicon")
+  .forEach(icon=>{
+
+    /*
+       Resume icon is handled separately.
+    */
+
+    if(icon.id === "resumeIcon"){
+      return;
+    }
+
+    icon.addEventListener(
+      "click",
+      ()=>{
+        handleAppClick(icon);
+      }
+    );
 
   });
 
-});
 
-document.querySelectorAll(".dock .icon").forEach(icon=>{
+/* Dock icons */
 
-  icon.addEventListener("click",()=>{
+document
+  .querySelectorAll(".dock .icon")
+  .forEach(icon=>{
 
-    const app=icon.dataset.app;
-    const q=icon.dataset.q;
-
-    if(app==="chat"){
-
-      openWindow("win-chat");
-
-      if(q) sendQuestion(q);
-
+    if(icon.id === "dockResume"){
+      return;
     }
 
-    if(app==="settings")
-      openWindow("win-settings");
-
-    if(app==="trash")
-      openWindow("win-trash");
+    icon.addEventListener(
+      "click",
+      ()=>{
+        handleAppClick(icon);
+      }
+    );
 
   });
-
-});
 
 
 /* =====================================================
    CHAT ELEMENTS
 ===================================================== */
 
-const messages=document.getElementById("messages");
+const messages =
+  document.getElementById("messages");
 
-const input=document.getElementById("chatInput");
+const input =
+  document.getElementById("chatInput");
 
-const sendBtn=document.getElementById("sendBtn");
+const sendBtn =
+  document.getElementById("sendBtn");
 
-const candidateName=document.getElementById("candidateName");
+const candidateName =
+  document.getElementById("candidateName");
 
-const avatar=document.getElementById("avatarInitial");
+const avatar =
+  document.getElementById("avatarInitial");
 
-const welcome=document.getElementById("welcomeMsg");
+const welcome =
+  document.getElementById("welcomeMsg");
 
 
 /* =====================================================
@@ -1252,30 +1932,52 @@ async function loadCandidate(){
 
   try{
 
-    const res=await fetch(
-      API_BASE+"/candidate-info"
-    );
+    const response =
+      await fetch(
+        API_BASE + "/candidate-info",
+        {
+          method:"GET",
+          mode:"cors",
+          cache:"no-store"
+        }
+      );
 
-    if(!res.ok) return;
 
-    const data=await res.json();
+    if(!response.ok){
+      return;
+    }
+
+
+    const data =
+      await response.json();
+
 
     if(data.name){
 
-      candidateName.textContent=data.name;
+      candidateName.textContent =
+        data.name;
 
-      avatar.textContent=
-      data.name.charAt(0).toUpperCase();
 
-      welcome.textContent=
-      "👋 Hi there! I'm "+data.name+
-      "'s AI assistant. Ask me anything about my background, or tap a quick option below to get started.";
+      avatar.textContent =
+        data.name
+          .charAt(0)
+          .toUpperCase();
+
+
+      welcome.textContent =
+        "👋 Hi there! I'm " +
+        data.name +
+        "'s AI assistant. Ask me anything about my background, or tap a quick option below to get started.";
 
     }
 
-  }catch(err){
+  }
+  catch(error){
 
-    console.log(err);
+    console.log(
+      "Candidate info error:",
+      error
+    );
 
   }
 
@@ -1283,247 +1985,1119 @@ async function loadCandidate(){
 
 
 /* =====================================================
-   MESSAGE FUNCTIONS
+   ADD MESSAGE
 ===================================================== */
 
-function addMessage(text,type){
+function addMessage(
+  text,
+  type
+){
 
-  const div=document.createElement("div");
+  const div =
+    document.createElement("div");
 
-  div.className="msg "+type;
+  div.className =
+    "msg " + type;
 
-  div.textContent=text;
+  div.textContent =
+    text;
 
   messages.appendChild(div);
 
-  messages.scrollTop=messages.scrollHeight;
+  messages.scrollTop =
+    messages.scrollHeight;
 
   return div;
 
 }
 
 
+/* =====================================================
+   TYPING INDICATOR
+===================================================== */
+
 function showTyping(){
 
-  const div=document.createElement("div");
+  hideTyping();
 
-  div.className="typing";
 
-  div.id="typing";
+  const div =
+    document.createElement("div");
 
-  div.innerHTML=
-  "<span></span><span></span><span></span>";
+  div.className =
+    "typing";
+
+  div.id =
+    "typing";
+
+
+  div.innerHTML =
+    "<span></span>" +
+    "<span></span>" +
+    "<span></span>";
+
 
   messages.appendChild(div);
 
-  messages.scrollTop=messages.scrollHeight;
+  messages.scrollTop =
+    messages.scrollHeight;
 
 }
 
 
 function hideTyping(){
 
-  document.getElementById("typing")?.remove();
+  const typing =
+    document.getElementById("typing");
+
+  if(typing){
+    typing.remove();
+  }
 
 }
 
 
 /* =====================================================
-   SAFE HTML
+   HTML ESCAPING
 ===================================================== */
 
 function escapeHTML(text){
 
-  return text
-  .replace(/&/g,"&amp;")
-  .replace(/</g,"&lt;")
-  .replace(/>/g,"&gt;");
+  return String(text ?? "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
 
 }
 
 
 /* =====================================================
-   FORMAT AI RESPONSE
+   INLINE MARKDOWN
 ===================================================== */
 
-function renderAssistantText(el,text){
+function inlineMarkdown(text){
 
-  text=text
-  .replace(/\*\*/g,"")
-  .replace(/__/g,"");
+  let safe =
+    escapeHTML(text);
 
-  const lines=text.split("\n");
 
-  let html="";
+  /*
+     Bold
+     **text**
+  */
 
-  for(let i=0;i<lines.length;i++){
+  safe =
+    safe.replace(
+      /\*\*(.+?)\*\*/g,
+      "<strong>$1</strong>"
+    );
 
-    const line=lines[i].trim();
 
-    if(line===""){
+  /*
+     Bold
+     __text__
+  */
 
-      html+="<br>";
+  safe =
+    safe.replace(
+      /__(.+?)__/g,
+      "<strong>$1</strong>"
+    );
+
+
+  /*
+     Inline code
+     `text`
+  */
+
+  safe =
+    safe.replace(
+      /`([^`]+)`/g,
+      "<strong>$1</strong>"
+    );
+
+
+  return safe;
+
+}
+
+
+/* =====================================================
+   AI RESPONSE FORMATTER
+   -----------------------------------------------------
+   Supports:
+
+   - bullet
+   * bullet
+   • bullet
+
+   1. item
+   2. item
+
+   Also detects headings before lists.
+
+   IMPORTANT:
+   We use real <ul> and <li> elements,
+   so the browser renders actual bullet points.
+===================================================== */
+
+function renderAssistantText(
+  element,
+  text
+){
+
+  if(!element){
+    return;
+  }
+
+
+  text =
+    String(text ?? "")
+      .replace(/\\r\\n/g,"\n")
+      .replace(/\\n/g,"\n")
+      .replace(/\\t/g,"\t");
+
+
+  /*
+     Normalize common bullet variations.
+
+     Example:
+     "• Item"
+     "•  Item"
+     "- Item"
+     "* Item"
+  */
+
+  text =
+    text.replace(
+      /\r\n/g,
+      "\n"
+    );
+
+
+  const lines =
+    text.split(/\n/);
+
+
+  let html = "";
+
+  let i = 0;
+
+
+  while(i < lines.length){
+
+    const original =
+      lines[i];
+
+    const raw =
+      original.trim();
+
+
+    /*
+       Skip blank lines.
+    */
+
+    if(raw === ""){
+
+      i++;
 
       continue;
 
     }
 
-    if(line.startsWith("•")){
 
-      html+=
-      '<div class="ai-bullet">'+
-      escapeHTML(line)+
-      '</div>';
-
-      continue;
-
-    }
-
-    const next=lines[i+1]
-    ?lines[i+1].trim():"";
+    /*
+       ------------------------------------------------
+       BULLET LIST
+       ------------------------------------------------
+    */
 
     if(
-      !line.startsWith("•") &&
-      next.startsWith("•")
+      /^[-*•●▪◦‣]\s+/.test(raw)
     ){
 
-      html+=
-      '<div class="ai-heading">'+
-      escapeHTML(line)+
-      '</div>';
+      html +=
+        '<ul class="ai-list">';
+
+
+      while(
+        i < lines.length
+      ){
+
+        const current =
+          lines[i].trim();
+
+
+        if(
+          !/^[-*•●▪◦‣]\s+/.test(
+            current
+          )
+        ){
+
+          break;
+
+        }
+
+
+        const content =
+          current.replace(
+            /^[-*•●▪◦‣]\s+/,
+            ""
+          );
+
+
+        html +=
+          "<li>" +
+          inlineMarkdown(content) +
+          "</li>";
+
+
+        i++;
+
+      }
+
+
+      html +=
+        "</ul>";
+
 
       continue;
 
     }
 
-    html+=
-    '<div class="ai-text">'+
-    escapeHTML(line)+
-    '</div>';
+
+    /*
+       ------------------------------------------------
+       NUMBERED LIST
+       ------------------------------------------------
+    */
+
+    if(
+      /^\d+[.)]\s+/.test(raw)
+    ){
+
+      html +=
+        '<ol class="ai-list ordered">';
+
+
+      while(
+        i < lines.length
+      ){
+
+        const current =
+          lines[i].trim();
+
+
+        if(
+          !/^\d+[.)]\s+/.test(
+            current
+          )
+        ){
+
+          break;
+
+        }
+
+
+        const content =
+          current.replace(
+            /^\d+[.)]\s+/,
+            ""
+          );
+
+
+        html +=
+          "<li>" +
+          inlineMarkdown(content) +
+          "</li>";
+
+
+        i++;
+
+      }
+
+
+      html +=
+        "</ol>";
+
+
+      continue;
+
+    }
+
+
+    /*
+       ------------------------------------------------
+       HEADING DETECTION
+       ------------------------------------------------
+
+       If the next line is a bullet/list,
+       treat the current line as a heading.
+    */
+
+    const next =
+      i + 1 < lines.length
+        ? lines[i + 1].trim()
+        : "";
+
+
+    const nextIsList =
+      /^[-*•●▪◦‣]\s+/.test(next) ||
+      /^\d+[.)]\s+/.test(next);
+
+
+    if(
+      nextIsList &&
+      raw.length < 120
+    ){
+
+      html +=
+        '<div class="ai-heading">' +
+        inlineMarkdown(raw) +
+        "</div>";
+
+    }
+    else{
+
+      html +=
+        '<div class="ai-text">' +
+        inlineMarkdown(raw) +
+        "</div>";
+
+    }
+
+
+    i++;
 
   }
 
-  el.innerHTML=html;
 
-  messages.scrollTop=messages.scrollHeight;
+  element.innerHTML =
+    html ||
+    '<div class="ai-text"></div>';
+
+
+  messages.scrollTop =
+    messages.scrollHeight;
 
 }
 
 
 /* =====================================================
-   STREAMING CHAT
+   RESPONSE EXTRACTION
 ===================================================== */
 
-async function sendQuestion(question){
+function extractAnswer(payload){
 
-  if(!question.trim()) return;
+  if(payload == null){
+    return "";
+  }
 
-  addMessage(question,"user");
 
-  input.value="";
+  if(
+    typeof payload === "string"
+  ){
 
-  input.disabled=true;
+    return payload;
 
-  sendBtn.disabled=true;
+  }
 
-  showTyping();
 
-  try{
+  if(
+    typeof payload !== "object"
+  ){
 
-    const res=await fetch(
-      API_BASE+"/chat",
-      {
-        method:"POST",
+    return String(payload);
 
-        headers:{
-          "Content-Type":"application/json"
-        },
+  }
 
-        body:JSON.stringify({
-          question:question
-        })
-      }
-    );
 
-    if(!res.ok){
+  /*
+     Common backend response fields.
+  */
 
-      hideTyping();
+  if(
+    typeof payload.answer === "string"
+  ){
 
-      addMessage(
-        "Something went wrong. Please try again.",
-        "bot"
-      );
+    return payload.answer;
 
-      return;
+  }
+
+
+  if(
+    typeof payload.response === "string"
+  ){
+
+    return payload.response;
+
+  }
+
+
+  if(
+    typeof payload.content === "string"
+  ){
+
+    return payload.content;
+
+  }
+
+
+  if(
+    typeof payload.text === "string"
+  ){
+
+    return payload.text;
+
+  }
+
+
+  if(
+    typeof payload.delta === "string"
+  ){
+
+    return payload.delta;
+
+  }
+
+
+  /*
+     OpenAI/Groq style:
+     choices[0].delta.content
+  */
+
+  const choice =
+    Array.isArray(payload.choices)
+      ? payload.choices[0]
+      : null;
+
+
+  if(choice){
+
+    if(
+      typeof choice.delta?.content === "string"
+    ){
+
+      return choice.delta.content;
 
     }
 
-    const reader=res.body.getReader();
 
-    const decoder=new TextDecoder();
+    if(
+      typeof choice.message?.content === "string"
+    ){
 
-    let fullText="";
+      return choice.message.content;
 
-    let botMessage=null;
+    }
 
-    while(true){
 
-      const {value,done}=await reader.read();
+    if(
+      typeof choice.text === "string"
+    ){
 
-      if(done) break;
+      return choice.text;
 
-      const chunk=
-      decoder.decode(value,{
-        stream:true
-      });
+    }
 
-      if(!chunk) continue;
+  }
+
+
+  return "";
+
+}
+
+
+/* =====================================================
+   STREAM LINE PARSER
+===================================================== */
+
+function parseStreamLine(line){
+
+  const trimmed =
+    line.trim();
+
+
+  if(
+    !trimmed ||
+    trimmed === "[DONE]"
+  ){
+
+    return "";
+
+  }
+
+
+  /*
+     SSE format:
+
+     data: {"answer":"Hello"}
+  */
+
+  let data =
+    trimmed;
+
+
+  if(
+    data.startsWith("data:")
+  ){
+
+    data =
+      data
+        .slice(5)
+        .trim();
+
+  }
+
+
+  if(
+    !data ||
+    data === "[DONE]"
+  ){
+
+    return "";
+
+  }
+
+
+  /*
+     Try JSON.
+  */
+
+  try{
+
+    const parsed =
+      JSON.parse(data);
+
+    return extractAnswer(parsed);
+
+  }
+  catch(error){
+
+    /*
+       If it is not JSON,
+       treat it as plain streamed text.
+    */
+
+    return data;
+
+  }
+
+}
+
+
+/* =====================================================
+   STREAM CHUNK HANDLER
+===================================================== */
+
+function processStreamChunk(
+  chunk,
+  state
+){
+
+  state.buffer += chunk;
+
+
+  /*
+     SSE and NDJSON use new lines.
+
+     Process complete lines.
+  */
+
+  const lines =
+    state.buffer.split(/\r?\n/);
+
+
+  state.buffer =
+    lines.pop() || "";
+
+
+  for(
+    const line of lines
+  ){
+
+    const piece =
+      parseStreamLine(line);
+
+
+    if(piece){
+
+      state.onPiece(piece);
+
+    }
+
+  }
+
+}
+
+
+/* =====================================================
+   SEND QUESTION
+===================================================== */
+
+async function sendQuestion(
+  question
+){
+
+  question =
+    String(question ?? "")
+      .trim();
+
+
+  if(
+    !question ||
+    sendBtn.disabled
+  ){
+
+    return;
+
+  }
+
+
+  /*
+     User message.
+  */
+
+  addMessage(
+    question,
+    "user"
+  );
+
+
+  input.value = "";
+
+  input.disabled = true;
+
+  sendBtn.disabled = true;
+
+
+  /*
+     Show immediate feedback.
+  */
+
+  showTyping();
+
+
+  let botMessage =
+    null;
+
+
+  let fullText =
+    "";
+
+
+  /*
+     Prevent duplicate chunks.
+  */
+
+  const updateBotMessage =
+    (text)=>{
+
+      if(
+        text == null ||
+        text === ""
+      ){
+
+        return;
+
+      }
+
+
+      /*
+         First response chunk:
+         remove typing indicator.
+      */
 
       if(!botMessage){
 
         hideTyping();
 
-        botMessage=addMessage(
-          "",
-          "bot"
-        );
+        botMessage =
+          addMessage(
+            "",
+            "bot"
+          );
 
       }
 
-      fullText+=chunk;
+
+      fullText += text;
+
 
       renderAssistantText(
         botMessage,
         fullText
       );
 
+    };
+
+
+  try{
+
+    /*
+       =================================================
+       CHAT REQUEST
+       =================================================
+    */
+
+    const response =
+      await fetch(
+        API_BASE + "/chat",
+        {
+          method:"POST",
+
+          headers:{
+            "Content-Type":
+              "application/json",
+
+            "Accept":
+              "text/event-stream, " +
+              "application/x-ndjson, " +
+              "text/plain, " +
+              "application/json"
+          },
+
+          body:
+            JSON.stringify({
+              question:question
+            })
+        }
+      );
+
+
+    /*
+       HTTP error.
+    */
+
+    if(!response.ok){
+
+      let detail = "";
+
+
+      try{
+
+        const errorData =
+          await response.json();
+
+        detail =
+          extractAnswer(
+            errorData
+          );
+
+      }
+      catch(error){
+
+        /*
+           Ignore JSON parsing error.
+        */
+
+      }
+
+
+      throw new Error(
+        detail ||
+        "Chat request failed with status " +
+        response.status
+      );
+
     }
+
+
+    /*
+       Determine response type.
+    */
+
+    const contentType =
+      (
+        response.headers.get(
+          "content-type"
+        ) || ""
+      ).toLowerCase();
+
+
+    /* =================================================
+       NORMAL JSON RESPONSE
+    ================================================= */
+
+    if(
+      contentType.includes(
+        "application/json"
+      )
+    ){
+
+      const data =
+        await response.json();
+
+
+      const answer =
+        extractAnswer(data);
+
+
+      if(answer){
+
+        updateBotMessage(
+          answer
+        );
+
+      }
+
+    }
+
+
+    /* =================================================
+       STREAMING RESPONSE
+    ================================================= */
+
+    else if(response.body){
+
+      const reader =
+        response.body.getReader();
+
+
+      const decoder =
+        new TextDecoder("utf-8");
+
+
+      const state = {
+
+        buffer:"",
+
+        onPiece:updateBotMessage
+
+      };
+
+
+      /*
+         Read stream continuously.
+      */
+
+      while(true){
+
+        const {
+          value,
+          done
+        } =
+          await reader.read();
+
+
+        if(done){
+
+          break;
+
+        }
+
+
+        const chunk =
+          decoder.decode(
+            value,
+            {
+              stream:true
+            }
+          );
+
+
+        if(!chunk){
+
+          continue;
+
+        }
+
+
+        /*
+           SSE / NDJSON / line based.
+        */
+
+        if(
+          contentType.includes(
+            "text/event-stream"
+          ) ||
+          contentType.includes(
+            "ndjson"
+          )
+        ){
+
+          processStreamChunk(
+            chunk,
+            state
+          );
+
+        }
+
+        /*
+           Plain text streaming.
+        */
+
+        else{
+
+          updateBotMessage(
+            chunk
+          );
+
+        }
+
+      }
+
+
+      /*
+         Flush TextDecoder.
+      */
+
+      const finalChunk =
+        decoder.decode();
+
+
+      if(finalChunk){
+
+        if(
+          contentType.includes(
+            "text/event-stream"
+          ) ||
+          contentType.includes(
+            "ndjson"
+          )
+        ){
+
+          processStreamChunk(
+            finalChunk,
+            state
+          );
+
+        }
+        else{
+
+          updateBotMessage(
+            finalChunk
+          );
+
+        }
+
+      }
+
+
+      /*
+         Process the last unfinished line.
+      */
+
+      if(
+        state.buffer.trim()
+      ){
+
+        const lastPiece =
+          parseStreamLine(
+            state.buffer
+          );
+
+
+        if(lastPiece){
+
+          updateBotMessage(
+            lastPiece
+          );
+
+        }
+
+      }
+
+    }
+
+
+    /* =================================================
+       EMPTY RESPONSE
+    ================================================= */
+
+    else{
+
+      const text =
+        await response.text();
+
+
+      if(text){
+
+        try{
+
+          const parsed =
+            JSON.parse(text);
+
+
+          updateBotMessage(
+            extractAnswer(parsed)
+          );
+
+        }
+        catch(error){
+
+          updateBotMessage(
+            text
+          );
+
+        }
+
+      }
+
+    }
+
+
+    /*
+       If the backend returned nothing.
+    */
 
     if(!botMessage){
 
       hideTyping();
 
+
       addMessage(
-        "I couldn't generate a response.",
+        "I couldn't generate a response. Please try again.",
         "bot"
       );
 
     }
 
-  }catch(err){
+  }
+  catch(error){
+
+    console.error(
+      "Chat error:",
+      error
+    );
+
 
     hideTyping();
 
+
+    let message =
+      "I couldn't reach the server. Please check your internet connection and try again.";
+
+
+    if(
+      error &&
+      error.message &&
+      error.message.includes(
+        "Chat request failed"
+      )
+    ){
+
+      message =
+        error.message;
+
+    }
+
+
     addMessage(
-      "I couldn't reach the server. Please check your internet connection.",
+      message,
       "bot"
     );
 
-  }finally{
+  }
+  finally{
 
-    input.disabled=false;
+    input.disabled =
+      false;
 
-    sendBtn.disabled=false;
+    sendBtn.disabled =
+      false;
 
     input.focus();
 
@@ -1533,66 +3107,225 @@ async function sendQuestion(question){
 
 
 /* =====================================================
-   INPUT
+   SEND BUTTON
 ===================================================== */
 
-sendBtn.addEventListener("click",()=>{
+sendBtn.addEventListener(
+  "click",
+  ()=>{
+    sendQuestion(
+      input.value
+    );
+  }
+);
 
-  sendQuestion(input.value);
 
-});
+/* =====================================================
+   ENTER KEY
+===================================================== */
 
-input.addEventListener("keydown",e=>{
+input.addEventListener(
+  "keydown",
+  event=>{
 
-  if(e.key==="Enter"){
+    if(
+      event.key === "Enter"
+    ){
 
-    sendQuestion(input.value);
+      event.preventDefault();
+
+      sendQuestion(
+        input.value
+      );
+
+    }
 
   }
-
-});
+);
 
 
 /* =====================================================
    QUICK BUTTONS
 ===================================================== */
 
-document.querySelectorAll("[data-q]")
-.forEach(btn=>{
+document
+  .querySelectorAll(
+    ".chip[data-q]"
+  )
+  .forEach(button=>{
 
-  btn.addEventListener("click",()=>{
+    button.addEventListener(
+      "click",
+      ()=>{
 
-    if(btn.dataset.q)
-      sendQuestion(btn.dataset.q);
+        const question =
+          button.dataset.q;
+
+
+        if(question){
+
+          sendQuestion(
+            question
+          );
+
+        }
+
+      }
+    );
 
   });
 
-});
+
+/* =====================================================
+   SETTINGS
+===================================================== */
+
+const glassSlider =
+  document.getElementById(
+    "glassSlider"
+  );
+
+
+if(glassSlider){
+
+  glassSlider.addEventListener(
+    "input",
+    ()=>{
+      const value =
+        Number(
+          glassSlider.value
+        );
+
+      const opacity =
+        0.15 +
+        (
+          value / 100
+        ) * 0.30;
+
+
+      document
+        .querySelectorAll(
+          ".app-window"
+        )
+        .forEach(windowElement=>{
+
+          windowElement.style.background =
+            `rgba(255,255,255,${opacity})`;
+
+        });
+
+    }
+  );
+
+}
+
+
+const tintSlider =
+  document.getElementById(
+    "tintSlider"
+  );
+
+
+if(tintSlider){
+
+  tintSlider.addEventListener(
+    "input",
+    ()=>{
+      const value =
+        Number(
+          tintSlider.value
+        );
+
+
+      const opacity =
+        0.05 +
+        (
+          value / 100
+        ) * 0.30;
+
+
+      document
+        .querySelector(".desktop")
+        .style.filter =
+          `saturate(${1 + value / 200})
+           brightness(${1 + opacity / 10})`;
+
+    }
+  );
+
+}
 
 
 /* =====================================================
-   RIPPLE
+   RIPPLE EFFECT
 ===================================================== */
 
-document.addEventListener("click",e=>{
+document.addEventListener(
+  "click",
+  event=>{
 
-  const ripple=document.createElement("div");
+    /*
+       Do not create ripples for typing.
+    */
 
-  ripple.className="ripple";
+    const target =
+      event.target;
 
-  ripple.style.left=e.clientX+"px";
-  ripple.style.top=e.clientY+"px";
 
-  document.body.appendChild(ripple);
+    if(
+      target &&
+      (
+        target.tagName === "INPUT" ||
+        target.tagName === "TEXTAREA"
+      )
+    ){
 
-  setTimeout(()=>{
-    ripple.remove();
-  },600);
+      return;
 
-});
+    }
 
+
+    const ripple =
+      document.createElement(
+        "div"
+      );
+
+
+    ripple.className =
+      "ripple";
+
+
+    ripple.style.left =
+      event.clientX + "px";
+
+
+    ripple.style.top =
+      event.clientY + "px";
+
+
+    document.body.appendChild(
+      ripple
+    );
+
+
+    setTimeout(
+      ()=>{
+        ripple.remove();
+      },
+      600
+    );
+
+  }
+);
+
+
+/* =====================================================
+   START APPLICATION
+===================================================== */
 
 loadCandidate();
+
+input.focus();
 
 </script>
 
