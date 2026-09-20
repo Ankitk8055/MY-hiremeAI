@@ -1,3 +1,4 @@
+```python
 import json
 import os
 import time
@@ -22,9 +23,7 @@ load_dotenv()
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 
 if not GROQ_API_KEY:
-    raise RuntimeError(
-        "GROQ_API_KEY is not configured."
-    )
+    raise RuntimeError("GROQ_API_KEY is not configured.")
 
 
 # ============================================================
@@ -63,6 +62,9 @@ RESUME_PATH = BACKEND_DIR / "my_resume.pdf"
 # ============================================================
 
 candidate_resume: dict = {}
+
+# Stores the modification time of the PDF currently loaded
+resume_last_modified = None
 
 
 # ============================================================
@@ -202,7 +204,7 @@ IMPORTANT RULES:
 1. Do not invent information.
 
 2. Only extract information explicitly present
-   in the resume.
+in the resume.
 
 3. If information is unavailable, return null.
 
@@ -279,22 +281,90 @@ IMPORTANT RULES:
 
 
 # ============================================================
-# INITIALIZE RESUME
+# GET RESUME MODIFICATION TIME
 # ============================================================
 
-def initialize_resume():
+def get_resume_modified_time():
 
     """
-    Reads and parses the resume once during startup.
+    Returns the modification time of the resume PDF.
 
-    The parsed resume is cached in memory.
+    This is used to detect whether the PDF has changed
+    since it was last parsed.
+    """
+
+    if not RESUME_PATH.exists():
+
+        raise FileNotFoundError(
+            f"Resume PDF not found at: {RESUME_PATH}"
+        )
+
+    return RESUME_PATH.stat().st_mtime_ns
+
+
+# ============================================================
+# INITIALIZE / REFRESH RESUME
+# ============================================================
+
+def initialize_resume(force=False):
+
+    """
+    Reads and parses the resume.
+
+    If force=False:
+        Only parses when the PDF has changed.
+
+    If force=True:
+        Always parses the PDF.
     """
 
     global candidate_resume
-
-    start_time = time.perf_counter()
+    global resume_last_modified
 
     try:
+
+        # ----------------------------------------------------
+        # GET CURRENT PDF VERSION
+        # ----------------------------------------------------
+
+        current_modified_time = (
+            get_resume_modified_time()
+        )
+
+        # ----------------------------------------------------
+        # CHECK IF RE-PARSING IS NECESSARY
+        # ----------------------------------------------------
+
+        if (
+            not force
+            and candidate_resume.get("data") is not None
+            and resume_last_modified == current_modified_time
+        ):
+
+            # PDF has not changed.
+            return
+
+        print(
+            "\n======================================"
+        )
+
+        if force:
+
+            print(
+                "🔄 FORCED RESUME RELOAD"
+            )
+
+        else:
+
+            print(
+                "🔄 NEW RESUME DETECTED"
+            )
+
+        print(
+            "======================================"
+        )
+
+        start_time = time.perf_counter()
 
         # ----------------------------------------------------
         # STEP 1: READ PDF
@@ -310,7 +380,6 @@ def initialize_resume():
                 "No text could be extracted from resume PDF."
             )
 
-
         # ----------------------------------------------------
         # STEP 2: PARSE RESUME
         # ----------------------------------------------------
@@ -319,15 +388,19 @@ def initialize_resume():
             resume_text
         )
 
-
         # ----------------------------------------------------
-        # STEP 3: CACHE
+        # STEP 3: UPDATE CACHE
         # ----------------------------------------------------
 
         candidate_resume["data"] = (
             parsed_resume
         )
 
+        # Store the version of the PDF
+        # that was successfully parsed
+        resume_last_modified = (
+            current_modified_time
+        )
 
         total_time = (
             time.perf_counter()
@@ -356,12 +429,17 @@ def initialize_resume():
             "======================================\n"
         )
 
-
     except Exception as e:
 
         print(
             f"❌ Error initializing resume: {e}"
         )
+
+        # If there is no previously loaded resume,
+        # allow the application to report an error.
+        if candidate_resume.get("data") is None:
+
+            raise
 
 
 # ============================================================
@@ -375,7 +453,10 @@ async def lifespan(app: FastAPI):
         "\n🚀 Starting Hire Me AI..."
     )
 
-    initialize_resume()
+    # Parse resume when server starts
+    initialize_resume(
+        force=True
+    )
 
     yield
 
@@ -398,7 +479,7 @@ app = FastAPI(
         "structured data and streaming AI-powered HR Q&A."
     ),
 
-    version="2.0.0",
+    version="2.1.0",
 
     lifespan=lifespan
 )
@@ -481,8 +562,12 @@ def health_check():
         "streaming":
             True,
 
+        "resume_last_modified":
+            resume_last_modified,
+
         "resume_preview_endpoint":
             "/resume-preview",
+
         "resume_download_endpoint":
             "/download-resume"
     }
@@ -493,33 +578,60 @@ def health_check():
 # ============================================================
 
 def validate_resume_file() -> Path:
+
     """Validate that the resume exists and is a non-empty file."""
+
     if not RESUME_PATH.exists():
-        print(f"❌ Resume not found: {RESUME_PATH}")
+
+        print(
+            f"❌ Resume not found: {RESUME_PATH}"
+        )
+
         raise HTTPException(
+
             status_code=404,
+
             detail=(
                 "Resume PDF not found on server. "
-                "Make sure my_resume.pdf is deployed inside the backend folder."
+                "Make sure my_resume.pdf is deployed "
+                "inside the backend folder."
             )
         )
 
     if not RESUME_PATH.is_file():
+
         raise HTTPException(
+
             status_code=500,
-            detail="Resume path exists but is not a file."
+
+            detail=(
+                "Resume path exists but is not a file."
+            )
         )
 
     file_size = RESUME_PATH.stat().st_size
 
     if file_size == 0:
-        print("❌ Resume PDF exists but is empty.")
-        raise HTTPException(
-            status_code=500,
-            detail="Resume PDF is empty."
+
+        print(
+            "❌ Resume PDF exists but is empty."
         )
 
-    print(f"📄 Resume ready: {RESUME_PATH} ({file_size} bytes)")
+        raise HTTPException(
+
+            status_code=500,
+
+            detail=(
+                "Resume PDF is empty."
+            )
+        )
+
+    print(
+        f"📄 Resume ready: "
+        f"{RESUME_PATH} "
+        f"({file_size} bytes)"
+    )
+
     return RESUME_PATH
 
 
@@ -529,21 +641,35 @@ def validate_resume_file() -> Path:
 
 @app.get("/resume-preview")
 def preview_resume():
+
     """Open the resume in the browser PDF viewer."""
+
     resume_file = validate_resume_file()
 
     return FileResponse(
+
         path=resume_file,
+
         media_type="application/pdf",
+
         filename="Ankit_Kumar_Resume.pdf",
+
         headers={
+
             "Content-Disposition":
                 'inline; filename="Ankit_Kumar_Resume.pdf"',
+
             "Cache-Control":
                 "no-store, no-cache, must-revalidate",
-            "Pragma": "no-cache",
-            "Expires": "0",
-            "X-Content-Type-Options": "nosniff"
+
+            "Pragma":
+                "no-cache",
+
+            "Expires":
+                "0",
+
+            "X-Content-Type-Options":
+                "nosniff"
         }
     )
 
@@ -554,21 +680,35 @@ def preview_resume():
 
 @app.get("/download-resume")
 def download_resume():
+
     """Force a direct PDF download."""
+
     resume_file = validate_resume_file()
 
     return FileResponse(
+
         path=resume_file,
+
         media_type="application/pdf",
+
         filename="Ankit_Kumar_Resume.pdf",
+
         headers={
+
             "Content-Disposition":
                 'attachment; filename="Ankit_Kumar_Resume.pdf"',
+
             "Cache-Control":
                 "no-store, no-cache, must-revalidate",
-            "Pragma": "no-cache",
-            "Expires": "0",
-            "X-Content-Type-Options": "nosniff"
+
+            "Pragma":
+                "no-cache",
+
+            "Expires":
+                "0",
+
+            "X-Content-Type-Options":
+                "nosniff"
         }
     )
 
@@ -579,6 +719,10 @@ def download_resume():
 
 @app.get("/candidate-info")
 def get_info():
+
+    # Check if a new PDF has been deployed
+    # before returning candidate information.
+    initialize_resume()
 
     resume: Resume | None = (
         candidate_resume.get("data")
@@ -687,6 +831,7 @@ DO NOT use:
 ###
 - **
 * **
+
 __text__
 
 Do not put asterisks around words.
@@ -829,14 +974,22 @@ def chat(request: ChatRequest):
     """
     Streams the LLM response token-by-token.
 
-    The frontend progressively displays the response.
+    Before answering, automatically checks whether
+    my_resume.pdf has changed.
+
+    If the PDF changed, it is parsed again.
     """
 
     request_start = time.perf_counter()
 
+    # --------------------------------------------------------
+    # AUTOMATICALLY CHECK FOR NEW RESUME
+    # --------------------------------------------------------
+
+    initialize_resume()
 
     # --------------------------------------------------------
-    # GET CACHED RESUME
+    # GET CURRENT RESUME
     # --------------------------------------------------------
 
     resume: Resume | None = (
@@ -856,7 +1009,6 @@ def chat(request: ChatRequest):
             )
         )
 
-
     # --------------------------------------------------------
     # VALIDATE QUESTION
     # --------------------------------------------------------
@@ -874,7 +1026,6 @@ def chat(request: ChatRequest):
             detail="Question cannot be empty."
         )
 
-
     # --------------------------------------------------------
     # BUILD PROMPT
     # --------------------------------------------------------
@@ -882,7 +1033,6 @@ def chat(request: ChatRequest):
     system_prompt = build_system_prompt(
         resume
     )
-
 
     # --------------------------------------------------------
     # STREAM GENERATOR
@@ -896,14 +1046,12 @@ def chat(request: ChatRequest):
 
         total_characters = 0
 
-
         try:
 
             print(
                 f"\n💬 Streaming question: "
                 f"{question}"
             )
-
 
             # ------------------------------------------------
             # GROQ STREAM
@@ -942,7 +1090,6 @@ def chat(request: ChatRequest):
                 )
             )
 
-
             # ------------------------------------------------
             # READ STREAM
             # ------------------------------------------------
@@ -953,13 +1100,11 @@ def chat(request: ChatRequest):
 
                     continue
 
-
                 delta = (
                     chunk
                     .choices[0]
                     .delta
                 )
-
 
                 content = getattr(
                     delta,
@@ -967,11 +1112,9 @@ def chat(request: ChatRequest):
                     None
                 )
 
-
                 if not content:
 
                     continue
-
 
                 # ------------------------------------------------
                 # FIRST TOKEN
@@ -989,26 +1132,15 @@ def chat(request: ChatRequest):
                         f"{first_token_time:.2f}s"
                     )
 
-
-                # ------------------------------------------------
-                # SEND RAW TEXT TO FRONTEND FORMATTER
-                # ------------------------------------------------
-                # Do not strip Markdown per streaming chunk.
-                # A marker such as ** can be split across chunks.
-                # The frontend formats the complete accumulated text.
-
-
                 total_characters += (
                     len(content)
                 )
-
 
                 # ------------------------------------------------
                 # SEND CONTENT
                 # ------------------------------------------------
 
                 yield content
-
 
             # ------------------------------------------------
             # FINAL TIMING
@@ -1018,7 +1150,6 @@ def chat(request: ChatRequest):
                 time.perf_counter()
                 - request_start
             )
-
 
             print(
                 "✅ Streaming completed"
@@ -1038,19 +1169,16 @@ def chat(request: ChatRequest):
                 "======================================\n"
             )
 
-
         except Exception as e:
 
             print(
                 f"❌ Streaming error: {e}"
             )
 
-
             yield (
                 "\n\nSorry, I encountered an error "
                 "while generating the response."
             )
-
 
     # --------------------------------------------------------
     # RETURN STREAM
@@ -1088,13 +1216,18 @@ if __name__ == "__main__":
     import uvicorn
 
     uvicorn.run(
+
         "main:app",
+
         host="0.0.0.0",
+
         port=int(
             os.getenv(
                 "PORT",
                 "8000"
             )
         ),
+
         reload=True
     )
+```
